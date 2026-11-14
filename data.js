@@ -15,7 +15,7 @@ window.ME = {
   email: "umangbagadi77@gmail.com",
   github: "https://github.com/umangbagadi03",
   linkedin: "https://www.linkedin.com/in/umang-bagadi",
-  resume: ""   // optional: a link to your résumé (e.g. Google Drive). Empty = résumé buttons hidden
+  resume: "https://drive.google.com/file/d/1Gq947vl933JUelD7WXO4qcdDKvr7Ekfy/view"   // link to your résumé. Empty "" = résumé buttons hidden
 };
 
 /* About: 2 or 3 short paragraphs. */
