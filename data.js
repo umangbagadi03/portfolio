@@ -5,13 +5,14 @@
 
 window.ME = {
   name: "Umang Bagadi",
-  greeting: "whoami",
   intro: "I design LLM agents and RAG systems where the model proposes and the code checks every claim against its source.",
   role: "GenAI Engineer",
   org: "TCS Research & Incubation",
   years: "2+ years",
   base: "Nagpur, India",
   status: "open to GenAI roles",
+  focus: ["LLM agents", "RAG", "Evals"],      // small labels floating around the hero art
+  timezone: "Asia/Kolkata",                   // for the local-time clock in the footer
   email: "umangbagadi77@gmail.com",
   github: "https://github.com/umangbagadi03",
   linkedin: "https://www.linkedin.com/in/umang-bagadi",
@@ -42,10 +43,10 @@ window.EXPERIENCE = [
 
 /* Skills: one row per group. Keep each row short (3 to 6 items). */
 window.SKILLS = [
-  { group: "Core",          items: ["Python", "Machine Learning", "Deep Learning", "NLP"] },
+  { group: "Core",          items: ["Python", "C++", "Machine Learning", "Deep Learning", "NLP"] },
   { group: "Generative AI", items: ["LLMs", "RAG", "AI Agents", "Prompt Engineering", "Tool Calling", "MCP"] },
   { group: "Frameworks",    items: ["LangGraph", "LangChain", "Hugging Face"] },
-  { group: "Vector DB",     items: ["Qdrant", "Embeddings", "Hybrid Search", "Reranking"] },
+  { group: "Vector DB",     items: ["Qdrant", "Pinecone", "Chroma", "Embeddings", "Hybrid Search", "Reranking"] },
   { group: "Models",        items: ["Claude", "GPT", "Gemini", "Llama"] },
   { group: "Engineering",   items: ["FastAPI", "REST APIs", "LLM Evaluation", "Git"] }
 ];
