@@ -68,22 +68,22 @@ window.SKILLS = [
 window.PROJECTS = [
   { name: "IncidentPilot", line: "An agent for production incidents that proves its root cause before it touches anything.",
     stack: ["LangGraph", "Qdrant", "FastAPI"], code: "https://github.com/umangbagadi03/incidentpilot" },
+  { name: "Nexus", line: "Company knowledge assistant. Every answer cites its documents.",
+    stack: ["RAG", "Reranking", "LangGraph"], code: "https://github.com/umangbagadi03/nexus" },
+  { name: "Clausemark", line: "Contract Q&A that highlights the exact words behind each answer.",
+    stack: ["Qdrant", "Gemini", "FastAPI"], code: "https://github.com/umangbagadi03/clausemark" },
+  { name: "Argus", line: "Multi-agent research assistant that critiques its own draft and loops back.",
+    stack: ["LangGraph", "Gemini"], code: "https://github.com/umangbagadi03/argus" },
+  { name: "Kasauti", line: "Scan a food label, get a verdict for your health. Rules decide, the LLM explains.",
+    stack: ["LangGraph", "FastAPI"], code: "https://github.com/umangbagadi03/kasauti" },
   { name: "Faultline", line: "Finds why an AI agent run failed, proves the fix and writes the regression test.",
     stack: ["LangGraph", "Claude", "pytest"], code: "https://github.com/umangbagadi03/faultline" },
   { name: "Underline", line: "Offline RAG for PDFs. Every sentence is cited; unsupported ones are removed.",
     stack: ["Ollama", "Hybrid search", "Node.js"], code: "https://github.com/umangbagadi03/underline" },
   { name: "Build Your Own Coding Agent", line: "Open course: build a coding agent from scratch, one notebook at a time.",
     stack: ["Python", "Ollama"], code: "https://github.com/umangbagadi03/build-your-own-coding-agent" },
-  { name: "Clausemark", line: "Contract Q&A that highlights the exact words behind each answer.",
-    stack: ["Qdrant", "Gemini", "FastAPI"], code: "https://github.com/umangbagadi03/clausemark" },
-  { name: "Nexus", line: "Company knowledge assistant. Every answer cites its documents.",
-    stack: ["RAG", "Reranking", "LangGraph"], code: "https://github.com/umangbagadi03/nexus" },
   { name: "Teller", line: "Bank support agent that can only use tools it has read about in policy docs.",
-    stack: ["LangGraph", "FastAPI"], code: "https://github.com/umangbagadi03/teller" },
-  { name: "Argus", line: "Multi-agent research assistant that critiques its own draft and loops back.",
-    stack: ["LangGraph", "Gemini"], code: "https://github.com/umangbagadi03/argus" },
-  { name: "Kasauti", line: "Scan a food label, get a verdict for your health. Rules decide, the LLM explains.",
-    stack: ["LangGraph", "FastAPI"], code: "https://github.com/umangbagadi03/kasauti" }
+    stack: ["LangGraph", "FastAPI"], code: "https://github.com/umangbagadi03/teller" }
 ];
 window.PROJECTS_VISIBLE = 6;   // how many show before "show all"
 
