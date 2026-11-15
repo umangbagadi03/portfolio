@@ -283,10 +283,12 @@
     if (reduce) return;
 
     // hero: the art drifts slower than the page and tilts; the labels float at their own speeds
-    if (y < H * 1.3) {
-      artEl.style.setProperty("--art-y", y * .18 + "px");
-      artEl.style.setProperty("--art-r", Math.min(10, y * .012) + "deg");
-      stickers.forEach((s, i) => s.style.setProperty("--st-y", -y * (.1 + i * .09) + "px"));
+    // (only on wide screens: on phones the art sits below the text and would drift into the next section)
+    const wide = innerWidth > 980;
+    if (y < H * 1.3 || !wide) {
+      artEl.style.setProperty("--art-y", wide ? y * .18 + "px" : "0px");
+      artEl.style.setProperty("--art-r", wide ? Math.min(10, y * .012) + "deg" : "0deg");
+      stickers.forEach((s, i) => s.style.setProperty("--st-y", wide ? -y * (.1 + i * .09) + "px" : "0px"));
     }
 
     // section icons turn as they pass through the screen

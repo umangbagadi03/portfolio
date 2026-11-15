@@ -43,6 +43,8 @@ document.documentElement.dataset.theme=t;document.documentElement.classList.add(
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .5s,color .5s}
+/* nothing may widen the page sideways (tilted art, the band) */
+@supports (overflow:clip){html,body{overflow-x:clip}}
 a{color:inherit}
 ::selection{background:var(--a1);color:var(--card)}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 28px}
@@ -323,6 +325,12 @@ footer .top:hover{color:var(--a1)}
 }
 @media (max-width:640px){
   .wrap{padding:0 18px}
+  .band{margin:24px 0}
+  .art{max-width:330px}
+  .frame{transform:rotate(1deg)}
+  .contact .box{padding-bottom:120px}
+  .contact .box svg.bg{width:130px;height:130px;right:-34px;top:auto;bottom:-34px;opacity:.55}
+  .contact h2{max-width:none}
   .themes{display:none}
   .menu-btn{margin-left:auto}
   .hero{padding-top:110px}
