@@ -34,11 +34,12 @@ document.documentElement.dataset.theme=t;document.documentElement.classList.add(
   --bg:#0e1726; --card:#15213a; --soft:#1c2b4a; --line:#233457; --line-2:#31477a;
   --ink:#eaf0fb; --ink-2:#a7b4cf; --ink-3:#6e7d9c;
   --a1:#ff7a59; --a2:#5ad1c4; --a3:#ffd166;
+  --ca:#b3304a; /* contact card is light in this theme, so its accent must be dark enough to read */
   --shadow:0 1px 0 rgba(255,255,255,.02),0 18px 40px -24px rgba(0,0,0,.9);
 }
 :root{
   --serif:"Fraunces",Georgia,serif; --sans:Inter,system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
-  --w:1180px; --ease:cubic-bezier(.2,.7,.2,1); --spring:cubic-bezier(.3,1.5,.5,1);
+  --w:1180px; --ease:cubic-bezier(.2,.7,.2,1); --spring:var(--ease);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
@@ -51,14 +52,16 @@ a{color:inherit}
 .serif{font-family:var(--serif)}
 
 /* reveal on scroll */
-.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0ms)}
+.js .rv{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0ms)}
 .js .rv.in{opacity:1;transform:none}
 
 /* buttons, links, pills */
-.btn{display:inline-flex;align-items:center;gap:10px;font:500 15px var(--sans);text-decoration:none;border-radius:999px;padding:13px 22px;border:1.5px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;transition:background-color .3s,color .3s,transform .3s var(--spring),box-shadow .3s}
-.btn:hover{background:var(--ink);color:var(--bg);transform:translateY(-2px);box-shadow:0 6px 0 -1px var(--a1)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 15px var(--sans);text-decoration:none;border-radius:999px;padding:12px 24px;border:1.5px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s,transform .15s var(--ease)}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible,.menu-btn:focus-visible,.copy:focus-visible,.themes button:focus-visible{outline:2px solid var(--a1);outline-offset:3px}
 .btn.pri{background:var(--ink);color:var(--bg)}
-.btn.pri:hover{background:var(--a1);border-color:var(--a1);color:#fff;box-shadow:0 6px 0 -1px var(--ink)}
+.btn.pri:hover{background:color-mix(in srgb,var(--ink) 82%,var(--bg));border-color:color-mix(in srgb,var(--ink) 82%,var(--bg))}
 .btn .ar{display:inline-block;transition:transform .3s var(--ease)}
 .btn:hover .ar{transform:translate(2px,-2px)}
 .ul{text-decoration:none;background:linear-gradient(var(--a1),var(--a1)) 0 100%/0 2px no-repeat;transition:background-size .4s var(--ease),color .3s}
@@ -73,17 +76,16 @@ a{color:inherit}
 .nav.hide{transform:translateY(-100%)}
 .nav .wrap{display:flex;align-items:center;gap:20px;height:76px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 18px var(--serif);letter-spacing:-.01em}
-.brand svg{width:28px;height:28px;border-radius:7px;transition:transform .5s var(--spring)}
-.brand:hover svg{transform:rotate(90deg)}
+.brand svg{width:28px;height:28px;border-radius:8px}
 .themes{display:flex;gap:6px;margin-left:auto;padding:5px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
-.themes button{width:22px;height:22px;border-radius:50%;border:0;cursor:pointer;padding:0;position:relative;transition:transform .3s var(--spring)}
-.themes button:hover{transform:scale(1.15)}
+.themes button{width:20px;height:20px;border-radius:50%;border:0;cursor:pointer;padding:0;position:relative}
+.themes button:hover::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--line-2)}
 .themes button[aria-pressed="true"]::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--ink)}
 .themes [data-t="paper"]{background:conic-gradient(#d4572a 0 33%,#2e6e60 0 66%,#f3efe6 0)}
 .themes [data-t="lavender"]{background:conic-gradient(#6a4bd6 0 33%,#c4507a 0 66%,#eeebf6 0)}
 .themes [data-t="ocean"]{background:conic-gradient(#ff7a59 0 33%,#5ad1c4 0 66%,#0e1726 0)}
-.menu-btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 18px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font:500 14px var(--sans);cursor:pointer;position:relative;z-index:71;transition:transform .3s var(--spring)}
-.menu-btn:hover{transform:scale(1.04)}
+.menu-btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 18px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font:500 14px var(--sans);cursor:pointer;position:relative;z-index:71;transition:background-color .2s}
+.menu-btn:hover{background:color-mix(in srgb,var(--ink) 85%,var(--bg))}
 .menu-btn i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--bg);position:relative}
 .menu-btn i::before,.menu-btn i::after{content:"";position:absolute;width:12px;height:1.5px;background:var(--ink);transition:transform .4s var(--ease)}
 .menu-btn i::before{transform:translateY(-3px)}
@@ -101,11 +103,11 @@ a{color:inherit}
 .overlay .wrap{height:100%;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:center;gap:40px}
 .overlay nav a{display:flex;align-items:baseline;gap:18px;text-decoration:none;font:400 clamp(44px,7vw,92px)/1.08 var(--serif);letter-spacing:-.02em;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .6s var(--ease),color .3s}
 .overlay nav a small{font:500 13px var(--mono);opacity:.5}
-.overlay nav a:hover{color:var(--a3);font-style:italic}
+.overlay nav a:hover{color:var(--a3)}
 .menu-open .overlay nav a{opacity:1;transform:none;transition-delay:calc(.25s + var(--i)*60ms)}
 .overlay aside{font-size:15px;opacity:0;transition:opacity .5s .5s}
 .menu-open .overlay aside{opacity:1}
-.overlay aside p{margin:0 0 6px;opacity:.6;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.1em}
+.overlay aside p{margin:0 0 4px;opacity:.6;font:500 14px var(--sans)}
 .overlay aside a{display:block;text-decoration:none;font:400 24px/1.6 var(--serif)}
 .overlay aside a:hover{color:var(--a3)}
 .overlay aside div{margin-bottom:28px}
@@ -113,67 +115,57 @@ a{color:inherit}
 /* ================= HERO ================= */
 .hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:130px 0 80px}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:64px;align-items:center;width:100%}
-.status{display:inline-flex;align-items:center;gap:9px;font:500 13px var(--sans);padding:7px 14px 7px 10px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
-.status i{width:8px;height:8px;border-radius:50%;background:var(--a2);box-shadow:0 0 0 0 var(--a2);animation:pulse 2.4s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
-.hello{font:400 italic clamp(20px,2vw,26px) var(--serif);color:var(--ink-2);margin:30px 0 4px}
+.status{display:flex;align-items:center;gap:8px;font:400 14px var(--sans);color:var(--ink-3);margin:24px 0 0}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--a2)}
+.hello{font:400 clamp(20px,2vw,24px) var(--serif);color:var(--ink-3);margin:0 0 8px}
 .name{font:600 clamp(58px,8.2vw,124px)/.95 var(--serif);letter-spacing:-.035em;margin:0;font-variation-settings:"opsz" 144}
 .name .dot{color:var(--a1)}
 .name .c{display:inline-block}
 .role{font:400 clamp(30px,3.6vw,52px)/1.1 var(--serif);letter-spacing:-.02em;margin:10px 0 0;color:var(--ink-2)}
-.mark{position:relative;display:inline-block;color:var(--ink);font-style:italic}
+.mark{position:relative;display:inline-block;color:var(--ink)}
 .mark svg{position:absolute;left:-4%;bottom:-.22em;width:108%;height:.42em;overflow:visible}
 .mark path{fill:none;stroke:var(--a1);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-.lead{font-size:clamp(17px,1.4vw,19px);color:var(--ink-2);max-width:46ch;margin:26px 0 0}
+.lead{font-size:clamp(17px,1.4vw,19px);color:var(--ink-2);max-width:46ch;margin:24px 0 0}
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
 /* hero load sequence (fallback runs at 3s if the script never does) */
-.js .h-in{opacity:0;transform:translateY(22px);animation:hin2 .9s var(--ease) 3s forwards}
+.js .h-in{opacity:0;transform:translateY(16px);animation:hin2 .9s var(--ease) 3s forwards}
 .go .h-in{animation:hin .9s var(--ease) var(--d,0ms) forwards}
 @keyframes hin{to{opacity:1;transform:none}}
 @keyframes hin2{to{opacity:1;transform:none}}
-.js .name .c{opacity:0;transform:translateY(.5em) rotate(8deg);animation:cin2 .8s var(--spring) 3s forwards}
-.go .name .c{animation:cin .8s var(--spring) calc(250ms + var(--i)*45ms) forwards}
+.js .name .c{opacity:0;transform:translateY(16px);animation:cin2 .8s var(--ease) 3s forwards}
+.go .name .c{animation:cin .8s var(--ease) calc(150ms + var(--i)*25ms) forwards}
 @keyframes cin{to{opacity:1;transform:none}}
 @keyframes cin2{to{opacity:1;transform:none}}
-.settled .name .c{animation:none;opacity:1;transform:none;transition:transform .4s var(--spring),color .3s}
-.settled .name .c:hover{transform:translateY(-.08em) rotate(-6deg);color:var(--a1)}
-.go .mark path{transition:stroke-dashoffset 1s var(--ease) 1.3s;stroke-dashoffset:0}
+.settled .name .c{animation:none;opacity:1;transform:none}
+.go .mark path{transition:stroke-dashoffset .9s var(--ease) .9s;stroke-dashoffset:0}
 
 /* generative art */
 .art{position:relative;aspect-ratio:4/5;max-width:460px;justify-self:center;width:100%}
-.frame{position:absolute;inset:0;background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transform:rotate(2deg);transition:transform .6s var(--spring)}
-.art:hover .frame{transform:rotate(0)}
+.frame{position:absolute;inset:0;background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transform:rotate(2deg)}
 .frame svg{width:100%;height:100%;display:block;border-radius:10px}
 .tile{transition:opacity .9s var(--ease)}
-.tile-in{transform-box:fill-box;transform-origin:center;transition:transform .9s var(--spring)}
-.art:hover .tile-in{transform:rotate(90deg)}
-.sticker{position:absolute;font:600 14px var(--sans);padding:9px 16px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow);white-space:nowrap;animation:bob 5s ease-in-out infinite;cursor:default;transition:background-color .3s}
-.sticker:hover{background:var(--a1)}
+.sticker{position:absolute;font:600 14px var(--sans);padding:9px 16px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow);white-space:nowrap;cursor:default}
 .sticker:nth-of-type(1){left:-26px;top:14%;rotate:-8deg}
-.sticker:nth-of-type(2){right:-22px;top:46%;rotate:6deg;animation-delay:-1.6s;background:var(--a2);color:#fff}
-.sticker:nth-of-type(3){left:12%;bottom:-16px;rotate:-3deg;animation-delay:-3.2s;background:var(--a1);color:#fff}
-@keyframes bob{50%{translate:0 -8px}}
-.js .art{opacity:0;transform:scale(.94) translateY(20px);animation:hin2 1s var(--ease) 3s forwards}
-.go .art{animation:artin 1.1s var(--spring) .5s forwards}
+.sticker:nth-of-type(2){right:-22px;top:46%;rotate:6deg}
+.sticker:nth-of-type(3){left:12%;bottom:-16px;rotate:-3deg}
+.js .art{opacity:0;transform:translateY(16px);animation:hin2 1s var(--ease) 3s forwards}
+.go .art{animation:artin .9s var(--ease) .3s forwards}
 @keyframes artin{to{opacity:1;transform:none}}
 
 /* ================= BAND ================= */
 .band{overflow:hidden;padding:20px 0;background:var(--ink);color:var(--bg);rotate:-1.2deg;margin:30px -20px;white-space:nowrap}
 .band .track{display:inline-block;will-change:transform}
 .band span{font:500 clamp(22px,2.6vw,34px)/1 var(--serif);letter-spacing:-.01em}
-.band span:nth-child(4n+3){font-style:italic;color:var(--a3)}
+.band span:nth-child(4n+3){color:var(--a3)}
 .band b{display:inline-block;width:12px;height:12px;margin:0 22px;vertical-align:.12em;background:var(--a1);border-radius:3px;rotate:45deg}
 
 /* ================= SECTIONS ================= */
 section.sec{padding:clamp(90px,14vh,150px) 0}
 .sh{display:flex;align-items:center;gap:16px;margin:0 0 50px}
-.sh .glyph{width:46px;height:46px;border-radius:12px;flex:none;box-shadow:inset 0 0 0 1px var(--line);transition:transform .6s var(--spring)}
-.sh:hover .glyph{transform:rotate(-12deg) scale(1.08)}
+.sh .glyph{width:46px;height:46px;border-radius:12px;flex:none;box-shadow:inset 0 0 0 1px var(--line)}
 .sh h2{font:500 clamp(40px,5.2vw,68px)/1 var(--serif);margin:0;letter-spacing:-.03em}
 .sh h2 em{color:var(--a1)}
 .sh .sub{margin-left:auto;font:500 13px var(--mono);color:var(--ink-3)}
-.js .sh .glyph{transform:scale(.4) rotate(-90deg);opacity:0;transition:transform .9s var(--spring),opacity .5s}
-.js .sh.in .glyph{transform:none;opacity:1}
 
 /* about */
 .about{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:64px;align-items:start}
@@ -193,19 +185,19 @@ section.sec{padding:clamp(90px,14vh,150px) 0}
 .tl::before{content:"";position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px}
 .tl-fill{position:absolute;left:14px;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--a1);transform-origin:top;transform:scaleY(var(--tp,0))}
 .job{position:relative;margin-bottom:22px}
-.job::before{content:"";position:absolute;left:-39px;top:30px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--line-2);transition:background-color .4s,border-color .4s,transform .5s var(--spring);z-index:1}
-.job.hit::before{background:var(--a1);border-color:var(--a1);transform:scale(1.15)}
-.job .card{background:var(--card);border-radius:20px;padding:26px 28px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transition:transform .45s var(--spring),box-shadow .4s}
-.job .card:hover{transform:translateX(6px);box-shadow:var(--shadow),inset 0 0 0 1.5px var(--a1)}
+.job::before{content:"";position:absolute;left:-39px;top:30px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--line-2);transition:background-color .4s,border-color .4s;z-index:1}
+.job.hit::before{background:var(--a1);border-color:var(--a1)}
+.job .card{background:var(--card);border-radius:20px;padding:26px 28px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transition:box-shadow .2s}
+.job .card:hover{box-shadow:var(--shadow),inset 0 0 0 1px var(--line-2)}
 .job .top{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
 .job h3{font:500 clamp(24px,2.3vw,30px)/1.15 var(--serif);margin:0;letter-spacing:-.015em}
 .job .when{margin-left:auto;font:500 13px var(--mono);color:var(--ink-3)}
-.job .org{color:var(--a2);font-weight:500;margin-top:4px}
+.job .org{color:var(--ink);font-weight:500;margin-top:4px}
 .job .org span{color:var(--ink-3);font-weight:400}
 .job p{color:var(--ink-2);margin:10px 0 14px}
 .job .pills{display:flex;flex-wrap:wrap;gap:6px}
 .job .pills:empty{display:none}
-.type{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:3px 9px;border-radius:6px;background:var(--soft);color:var(--ink-2)}
+.type{font:500 12px var(--sans);padding:4px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-2)}
 
 /* skills tree */
 .tree{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 110px;align-items:center}
@@ -218,26 +210,26 @@ section.sec{padding:clamp(90px,14vh,150px) 0}
 .root{position:relative;z-index:1;font:600 22px var(--serif);padding:16px 24px;border-radius:18px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow)}
 .branches{display:flex;flex-direction:column;gap:18px;position:relative;z-index:1}
 .branch{display:grid;grid-template-columns:190px minmax(0,1fr);gap:70px;align-items:center}
-.gnode{font:600 16px var(--sans);padding:12px 16px;border-radius:14px;background:var(--card);box-shadow:var(--shadow),inset 0 0 0 1px var(--line);cursor:default;transition:background-color .3s,color .3s,transform .35s var(--spring)}
+.gnode{font:600 16px var(--sans);padding:12px 16px;border-radius:14px;background:var(--card);box-shadow:var(--shadow),inset 0 0 0 1px var(--line);cursor:default;transition:background-color .2s,color .2s}
 .leaves{display:flex;flex-wrap:wrap;gap:8px 8px}
-.leaf{font:500 14px var(--sans);padding:7px 13px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);transition:background-color .3s,color .3s,transform .35s var(--spring),box-shadow .3s}
-.branch.on .gnode{background:var(--a1);color:#fff;transform:translateX(4px)}
-.branch.on .leaf{box-shadow:inset 0 0 0 1.5px var(--a1);transform:translateY(-2px)}
+.leaf{font:500 14px var(--sans);padding:8px 12px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);transition:background-color .2s,color .2s,box-shadow .2s}
+.branch.on .gnode{background:var(--a1);color:#fff}
+.branch.on .leaf{box-shadow:inset 0 0 0 1.5px var(--a1)}
 .leaf:hover{background:var(--a1);color:#fff}
 .tree.dim .branch:not(.on){opacity:.45}
 .branch{transition:opacity .35s}
 
 /* projects */
 .projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:22px}
-.proj{position:relative;display:flex;flex-direction:column;background:var(--card);border-radius:22px;overflow:hidden;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transition:transform .5s var(--spring),box-shadow .4s}
-.proj:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 50px -26px rgba(0,0,0,.45),inset 0 0 0 1.5px var(--ink)}
+.proj{position:relative;display:flex;flex-direction:column;background:var(--card);border-radius:22px;overflow:hidden;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transition:box-shadow .2s}
+.proj:hover{box-shadow:var(--shadow),inset 0 0 0 1.5px var(--ink)}
 .proj .cover{display:block;aspect-ratio:16/7;background:var(--soft);overflow:hidden}
-.proj .cover svg{width:100%;height:100%;display:block;transition:transform .9s var(--ease)}
-.proj:hover .cover svg{transform:scale(1.08) rotate(1deg)}
+.proj .cover svg{width:100%;height:100%;display:block;transition:transform .5s var(--ease)}
+.proj:hover .cover svg{transform:scale(1.03)}
 .proj .bd{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
 .proj .meta{display:flex;justify-content:space-between;align-items:center;font:500 12px var(--mono);color:var(--ink-3);margin-bottom:8px}
-.proj .go{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--soft);color:var(--ink);font-size:14px;transition:transform .45s var(--spring),background-color .3s,color .3s}
-.proj:hover .go{transform:rotate(45deg);background:var(--a1);color:#fff}
+.proj .go{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--soft);color:var(--ink);font-size:14px;transition:background-color .2s,color .2s}
+.proj:hover .go{background:var(--ink);color:var(--bg)}
 .proj h3{font:500 26px/1.15 var(--serif);margin:0 0 8px;letter-spacing:-.015em}
 .proj p{color:var(--ink-2);margin:0 0 18px;font-size:15px}
 .proj .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
@@ -248,8 +240,7 @@ section.sec{padding:clamp(90px,14vh,150px) 0}
 
 /* recognition */
 .rec{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:18px}
-.award{background:var(--card);border-radius:18px;padding:22px 22px 20px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transition:transform .45s var(--spring)}
-.award:hover{transform:translateY(-4px) rotate(.6deg)}
+.award{background:var(--card);border-radius:18px;padding:22px 22px 20px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line)}
 .award .yr{font:500 12px var(--mono);color:var(--a1)}
 .award b{display:block;font:500 21px/1.25 var(--serif);margin:10px 0 6px;letter-spacing:-.01em}
 .award small{color:var(--ink-3);font-size:14px}
@@ -257,19 +248,18 @@ section.sec{padding:clamp(90px,14vh,150px) 0}
 /* contact */
 .contact{padding:clamp(100px,16vh,160px) 0 clamp(70px,10vh,110px)}
 .contact .box{position:relative;background:var(--ink);color:var(--bg);border-radius:32px;padding:clamp(40px,6vw,80px);overflow:hidden}
-.contact .box svg.bg{position:absolute;right:-60px;top:-60px;width:340px;height:340px;opacity:.9;transition:transform 1.2s var(--ease)}
-.contact .box:hover svg.bg{transform:rotate(30deg)}
+.contact .box svg.bg{position:absolute;right:-60px;top:-60px;width:340px;height:340px;opacity:.9}
 .contact h2{font:500 clamp(44px,6.6vw,92px)/1 var(--serif);margin:0;letter-spacing:-.035em;max-width:11ch;position:relative}
-.contact h2 em{color:var(--a3)}
+.contact h2 em{color:var(--ca,var(--a3));font-style:normal}
 .contact p{position:relative;margin:22px 0 32px;max-width:44ch;opacity:.75;font-size:clamp(17px,1.4vw,19px)}
 .mailrow{position:relative;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.mail{font:400 clamp(22px,2.4vw,32px) var(--serif);text-decoration:none;border-bottom:2px solid var(--a3);padding-bottom:2px}
+.mail{font:400 clamp(22px,2.4vw,32px) var(--serif);text-decoration:none;border-bottom:2px solid var(--ca,var(--a3));padding-bottom:2px}
 .copy{font:500 13px var(--sans);padding:9px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--bg) 40%,transparent);background:transparent;color:var(--bg);cursor:pointer;transition:background-color .3s,color .3s}
 .copy:hover{background:var(--bg);color:var(--ink)}
 .copy.ok{background:var(--a2);border-color:var(--a2);color:#fff}
 .contact .soc{position:relative;display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
 .contact .soc .btn{border-color:color-mix(in srgb,var(--bg) 40%,transparent);color:var(--bg)}
-.contact .soc .btn:hover{background:var(--bg);color:var(--ink);box-shadow:0 6px 0 -1px var(--a3)}
+.contact .soc .btn:hover{background:var(--bg);color:var(--ink);border-color:var(--bg)}
 
 footer{padding:26px 0 40px;font-size:14px;color:var(--ink-3)}
 footer .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
@@ -278,38 +268,14 @@ footer .clock i{width:7px;height:7px;border-radius:50%;background:var(--a2)}
 footer .top{margin-left:auto;text-decoration:none;color:var(--ink-2)}
 footer .top:hover{color:var(--a1)}
 
-/* ================= SCROLL ANIMATIONS ================= */
-/* hero layers drift at different speeds (values set by fx.js) */
-.art{translate:0 var(--art-y,0px)}
-.frame{rotate:var(--art-r,0deg)}
-.sticker{margin-top:var(--st-y,0px)}
-/* section icons turn as you scroll past */
-.sh .glyph svg{transform:rotate(var(--gr,0deg));transition:transform .2s linear}
-/* about: the statement lights up word by word */
+/* ================= SCROLL EFFECTS (only ones that explain something) ================= */
+/* about: the statement lights up as you read it */
 .js .about .big .w{color:var(--ink-3);transition:color .3s}
 .js .about .big .w.on{color:var(--ink)}
-/* experience cards slide in from the side */
-.js .job.rv{transform:translateX(60px)}
-.js .job.rv.in{transform:none}
-/* skills: items pop in after the branches draw */
-.js .tree .leaf,.js .tree .gnode{opacity:0;transform:scale(.7)}
-.js .tree.in .leaf,.js .tree.in .gnode{opacity:1;transform:none;transition:opacity .5s var(--ease) var(--ld,0ms),transform .6s var(--spring) var(--ld,0ms),background-color .3s,color .3s,box-shadow .3s}
-.js .tree.in.settled-tree .leaf,.js .tree.in.settled-tree .gnode{transition:opacity .35s,transform .35s var(--spring),background-color .3s,color .3s,box-shadow .3s}
-.js .tree.in .branch.on .gnode{transform:translateX(4px)}
-.js .tree.in .branch.on .leaf{transform:translateY(-2px)}
-/* projects tilt up into place; covers move inside their frame */
-.js .proj.rv{transform:translateY(60px) rotate(var(--tilt,-3deg)) scale(.96);transition:opacity .9s var(--ease) var(--d,0ms),transform 1s var(--spring) var(--d,0ms),box-shadow .4s}
-.js .proj.rv.in{transform:none}
-.js .proj.rv.in:hover{transform:translateY(-6px) rotate(-.4deg)}
-.proj .cover svg{transform:translateY(var(--py,0px)) scale(1.18)}
-.proj:hover .cover svg{transform:translateY(var(--py,0px)) scale(1.26) rotate(1deg)}
-/* awards fan in */
-.js .award.rv{transform:translateY(50px) rotate(var(--rot,0deg));transform-origin:bottom center;transition:opacity .9s var(--ease) var(--d,0ms),transform 1s var(--spring) var(--d,0ms)}
-.js .award.rv.in{transform:none}
-.js .award.rv.in:hover{transform:translateY(-4px) rotate(.6deg)}
-/* contact card grows in, its art turns with the scroll */
-.contact .box{transform:scale(var(--cs,1));transform-origin:center bottom}
-.contact .box svg.bg{rotate:var(--cr,0deg)}
+/* skills: groups and items fade in after their branches draw */
+.js .tree .leaf,.js .tree .gnode{opacity:0}
+.js .tree.in .leaf,.js .tree.in .gnode{opacity:1;transition:opacity .5s var(--ease) var(--ld,0ms),background-color .2s,color .2s,box-shadow .2s}
+.js .tree.in.settled-tree .leaf,.js .tree.in.settled-tree .gnode{transition:opacity .2s,background-color .2s,color .2s,box-shadow .2s}
 
 @media (max-width:980px){
   .hero .wrap,.about{grid-template-columns:1fr}
@@ -345,10 +311,9 @@ footer .top:hover{color:var(--a1)}
 .menu-themes{display:none;margin-top:6px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js .rv,.js .h-in,.js .name .c,.js .art,.js .sh .glyph,.js .job.rv,.js .proj.rv,.js .award.rv,.js .tree .leaf,.js .tree .gnode{opacity:1;transform:none;animation:none;transition:none}
+  .js .rv,.js .h-in,.js .name .c,.js .art,.js .tree .leaf,.js .tree .gnode{opacity:1;transform:none;animation:none;transition:none}
   .js .about .big .w{color:var(--ink)}
   .mark path{stroke-dashoffset:0}
-  .sticker,.status i{animation:none}
 }
 </style>
 </head>
@@ -384,15 +349,15 @@ footer .top:hover{color:var(--a1)}
   <section class="hero" id="top">
     <div class="wrap">
       <div>
-        <span class="status h-in" style="--d:100ms"><i></i><span id="status"></span></span>
-        <p class="hello h-in" style="--d:200ms">Hello, I'm</p>
+        <p class="hello h-in" style="--d:100ms">Hello, I'm</p>
         <h1 class="name" id="name"></h1>
-        <p class="role h-in" style="--d:900ms" id="role"></p>
-        <p class="lead h-in" style="--d:1050ms" id="intro"></p>
-        <div class="cta h-in" style="--d:1200ms">
+        <p class="role h-in" style="--d:550ms" id="role"></p>
+        <p class="lead h-in" style="--d:650ms" id="intro"></p>
+        <div class="cta h-in" style="--d:750ms">
           <a class="btn pri" id="hero-resume" target="_blank" rel="noopener">View résumé <span class="ar">↗</span></a>
           <a class="btn" href="#projects">See my work</a>
         </div>
+        <p class="status h-in" style="--d:850ms"><i></i><span id="status"></span></p>
       </div>
       <div class="art" id="art" aria-hidden="true">
         <div class="frame"><svg id="art-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"></svg></div>
@@ -403,7 +368,7 @@ footer .top:hover{color:var(--a1)}
   <div class="band" aria-hidden="true"><div class="track" id="band"></div></div>
 
   <section class="sec" id="about"><div class="wrap">
-    <div class="sh rv"><span class="glyph" data-seed="about"></span><h2>About <em>me</em></h2></div>
+    <div class="sh rv"><span class="glyph" data-seed="about"></span><h2>About</h2></div>
     <div class="about">
       <div id="about-text"></div>
       <div class="rv" style="--d:150ms">
@@ -419,7 +384,7 @@ footer .top:hover{color:var(--a1)}
   </div></section>
 
   <section class="sec" id="skills"><div class="wrap">
-    <div class="sh rv"><span class="glyph" data-seed="skills"></span><h2>Skills</h2><span class="sub">hover a branch</span></div>
+    <div class="sh rv"><span class="glyph" data-seed="skills"></span><h2>Skills</h2><span class="sub">Hover a group</span></div>
     <div class="tree rv" id="tree"><svg class="wires" id="tree-wires"></svg><div class="root">Skills</div><div class="branches" id="branches"></div></div>
   </div></section>
 
@@ -437,7 +402,7 @@ footer .top:hover{color:var(--a1)}
   <section class="contact" id="contact"><div class="wrap">
     <div class="box rv">
       <svg class="bg" id="contact-art" viewBox="0 0 300 300" aria-hidden="true"></svg>
-      <h2>Have a role or an idea? <em>Let's talk.</em></h2>
+      <h2>Have a role or an idea? <em>Let's talk</em></h2>
       <p id="contact-text"></p>
       <div class="mailrow"><a class="mail" id="mail"></a><button class="copy" id="copy">Copy email</button></div>
       <div class="soc" id="contact-soc"></div>
