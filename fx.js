@@ -107,7 +107,7 @@
   $("proj-count").textContent = `${P.length} project${P.length === 1 ? "" : "s"}`;
   $("proj-grid").innerHTML = P.map((p, i) => {
     const main = p.demo || p.code;
-    return `<article class="proj rv${i >= LIMIT ? " hidden" : ""}" style="--d:${(i % 3) * 90}ms">
+    return `<article class="proj rv${i >= LIMIT ? " hidden" : ""}" style="--d:${(i % 3) * 90}ms;--tilt:${[-3, 2, -2][i % 3]}deg">
       ${main ? `<a class="cover-link" href="${main}" ${ext} aria-label="${esc(p.name)}"></a>` : ""}
       <span class="cover"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${art(p.name, 8, 3, 50)}</svg></span>
       <div class="bd">
@@ -130,7 +130,7 @@
   // recognition
   const R = window.RECOGNITION || [];
   if (!R.length) $("recognition").remove();
-  else $("rec").innerHTML = R.map((r, i) => `<div class="award rv" style="--d:${i * 90}ms">${r.when ? `<span class="yr">${esc(r.when)}</span>` : `<span class="yr">&nbsp;</span>`}<b>${esc(r.what)}</b><small>${esc(r.who)}</small></div>`).join("");
+  else $("rec").innerHTML = R.map((r, i) => `<div class="award rv" style="--d:${i * 90}ms;--rot:${[-7, 5, -4, 7][i % 4]}deg">${r.when ? `<span class="yr">${esc(r.when)}</span>` : `<span class="yr">&nbsp;</span>`}<b>${esc(r.what)}</b><small>${esc(r.who)}</small></div>`).join("");
 
   // contact + footer
   $("contact-art").innerHTML = art("contact", 3, 3, 100);
@@ -189,7 +189,7 @@
   // hero entrance
   document.fonts.ready.then(() => {
     root.classList.add("go");
-    setTimeout(() => root.classList.add("settled"), reduce ? 0 : 150 + ci * 25 + 900);
+    setTimeout(() => root.classList.add("settled"), reduce ? 0 : 250 + ci * 45 + 900);
   });
 
   // reveal on scroll
@@ -261,6 +261,9 @@
   const nav = $("nav"), prog = $("prog"), band = $("band"), tl = $("tl"), fill = $("tl-fill");
   const jobs = [...document.querySelectorAll(".job")];
   const statement = $("statement"), sWords = statement ? [...statement.querySelectorAll(".w")] : [];
+  const artEl = $("art"), stickers = [...document.querySelectorAll(".sticker")];
+  const glyphs = [...document.querySelectorAll(".sh .glyph")];
+  const box = document.querySelector(".contact .box");
   let lastY = scrollY, ticking = false, bandW = 0, drift = 0;
   const measure = () => { bandW = band.scrollWidth / 3; drawTree(); };
   function frame() {
@@ -277,6 +280,29 @@
     fill.style.setProperty("--tp", k);
     jobs.forEach(j => j.classList.toggle("hit", j.offsetTop + 30 <= k * (r.height - 16) + 8));
     if (reduce) return;
+
+    // hero: the art drifts slower than the page and tilts; the labels float at their own speeds
+    // (wide screens only: on phones the art sits below the text and would drift into the next section)
+    const wide = innerWidth > 980;
+    if (y < H * 1.3 || !wide) {
+      artEl.style.setProperty("--art-y", wide ? y * .18 + "px" : "0px");
+      artEl.style.setProperty("--art-r", wide ? Math.min(10, y * .012) + "deg" : "0deg");
+      stickers.forEach((s, i) => s.style.setProperty("--st-y", wide ? -y * (.1 + i * .09) + "px" : "0px"));
+    }
+
+    // section icons turn as they pass through the screen
+    glyphs.forEach(g => {
+      const gr = g.getBoundingClientRect();
+      if (gr.bottom > -50 && gr.top < H + 50) g.style.setProperty("--gr", ((gr.top - H / 2) / H) * -140 + "deg");
+    });
+
+    // contact: the card grows into place and its art turns
+    if (box) {
+      const br = box.getBoundingClientRect();
+      const bk = clamp((H - br.top) / (H * .65));
+      box.style.setProperty("--cs", .9 + bk * .1);
+      box.style.setProperty("--cr", (1 - bk) * -70 + "deg");
+    }
 
     // about: the statement lights up word by word as you read
     if (statement) {

@@ -39,7 +39,7 @@ document.documentElement.dataset.theme=t;document.documentElement.classList.add(
 }
 :root{
   --serif:"Fraunces",Georgia,serif; --sans:Inter,system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
-  --w:1180px; --ease:cubic-bezier(.2,.7,.2,1); --spring:var(--ease);
+  --w:1180px; --ease:cubic-bezier(.2,.7,.2,1); --spring:var(--ease); --bounce:cubic-bezier(.3,1.5,.5,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}
@@ -132,22 +132,25 @@ a{color:inherit}
 .go .h-in{animation:hin .9s var(--ease) var(--d,0ms) forwards}
 @keyframes hin{to{opacity:1;transform:none}}
 @keyframes hin2{to{opacity:1;transform:none}}
-.js .name .c{opacity:0;transform:translateY(16px);animation:cin2 .8s var(--ease) 3s forwards}
-.go .name .c{animation:cin .8s var(--ease) calc(150ms + var(--i)*25ms) forwards}
+.js .name .c{opacity:0;transform:translateY(.5em) rotate(8deg);animation:cin2 .8s var(--bounce) 3s forwards}
+.go .name .c{animation:cin .8s var(--bounce) calc(250ms + var(--i)*45ms) forwards}
 @keyframes cin{to{opacity:1;transform:none}}
 @keyframes cin2{to{opacity:1;transform:none}}
 .settled .name .c{animation:none;opacity:1;transform:none}
-.go .mark path{transition:stroke-dashoffset .9s var(--ease) .9s;stroke-dashoffset:0}
+.go .mark path{transition:stroke-dashoffset 1s var(--ease) 1.3s;stroke-dashoffset:0}
 
 /* generative art */
 .art{position:relative;aspect-ratio:4/5;max-width:460px;justify-self:center;width:100%}
 .frame{position:absolute;inset:0;background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--shadow),inset 0 0 0 1px var(--line);transform:rotate(2deg)}
 .frame svg{width:100%;height:100%;display:block;border-radius:10px}
 .tile{transition:opacity .9s var(--ease)}
-.sticker{position:absolute;font:600 14px var(--sans);padding:9px 16px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow);white-space:nowrap;cursor:default}
+.tile-in{transform-box:fill-box;transform-origin:center;transition:transform .9s var(--bounce)}
+.art:hover .tile-in{transform:rotate(90deg)}
+.sticker{position:absolute;font:600 14px var(--sans);padding:9px 16px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow);white-space:nowrap;cursor:default;animation:bob 5s ease-in-out infinite}
 .sticker:nth-of-type(1){left:-26px;top:14%;rotate:-8deg}
-.sticker:nth-of-type(2){right:-22px;top:46%;rotate:6deg}
-.sticker:nth-of-type(3){left:12%;bottom:-16px;rotate:-3deg}
+.sticker:nth-of-type(2){right:-22px;top:46%;rotate:6deg;animation-delay:-1.6s}
+.sticker:nth-of-type(3){left:12%;bottom:-16px;rotate:-3deg;animation-delay:-3.2s}
+@keyframes bob{50%{translate:0 -8px}}
 .js .art{opacity:0;transform:translateY(16px);animation:hin2 1s var(--ease) 3s forwards}
 .go .art{animation:artin .9s var(--ease) .3s forwards}
 @keyframes artin{to{opacity:1;transform:none}}
@@ -272,6 +275,22 @@ footer .top:hover{color:var(--a1)}
 /* about: the statement lights up as you read it */
 .js .about .big .w{color:var(--ink-3);transition:color .3s}
 .js .about .big .w.on{color:var(--ink)}
+/* hero: the art drifts slower than the page and tilts; labels float at their own speeds (set by fx.js, wide screens only) */
+.art{translate:0 var(--art-y,0px)}
+.frame{rotate:var(--art-r,0deg)}
+.sticker{margin-top:var(--st-y,0px)}
+/* section icons turn as they pass through the screen */
+.sh .glyph svg{transform:rotate(var(--gr,0deg));transition:transform .2s linear}
+/* cards arrive with character: experience slides in, projects tilt up, awards fan in */
+.js .job.rv{transform:translateX(60px)}
+.js .job.rv.in{transform:none}
+.js .proj.rv{transform:translateY(60px) rotate(var(--tilt,-3deg)) scale(.96);transition:opacity .9s var(--ease) var(--d,0ms),transform 1s var(--bounce) var(--d,0ms),box-shadow .2s}
+.js .proj.rv.in{transform:none}
+.js .award.rv{transform:translateY(50px) rotate(var(--rot,0deg));transform-origin:bottom center;transition:opacity .9s var(--ease) var(--d,0ms),transform 1s var(--bounce) var(--d,0ms)}
+.js .award.rv.in{transform:none}
+/* contact: the card grows into place and its art turns */
+.contact .box{transform:scale(var(--cs,1));transform-origin:center bottom}
+.contact .box svg.bg{rotate:var(--cr,0deg)}
 /* skills: groups and items fade in after their branches draw */
 .js .tree .leaf,.js .tree .gnode{opacity:0}
 .js .tree.in .leaf,.js .tree.in .gnode{opacity:1;transition:opacity .5s var(--ease) var(--ld,0ms),background-color .2s,color .2s,box-shadow .2s}
@@ -311,7 +330,9 @@ footer .top:hover{color:var(--a1)}
 .menu-themes{display:none;margin-top:6px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js .rv,.js .h-in,.js .name .c,.js .art,.js .tree .leaf,.js .tree .gnode{opacity:1;transform:none;animation:none;transition:none}
+  .js .rv,.js .h-in,.js .name .c,.js .art,.js .tree .leaf,.js .tree .gnode,.js .job.rv,.js .proj.rv,.js .award.rv{opacity:1;transform:none;animation:none;transition:none}
+  .sticker{animation:none}
+  .art:hover .tile-in{transform:none}
   .js .about .big .w{color:var(--ink)}
   .mark path{stroke-dashoffset:0}
 }
